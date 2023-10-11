@@ -4,7 +4,7 @@ interface Task {
   description: string;
   creationDate: Date;
   dueDate: Date;
-  assignedTo: string;
+  assignedTo: string | null;
   category: string;
   status: 'Pending' | 'Completed';
 }
