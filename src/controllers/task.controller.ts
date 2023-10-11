@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
-export const createTask = (req: Request, res: Response) => {
-  res.send('createTask success');
+export const createTask = (req: any, res: Response) => {
+  res.send(req.user);
 };
 
 export const getTaskById = (req: Request, res: Response) => {
