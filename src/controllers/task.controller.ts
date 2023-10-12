@@ -3,18 +3,17 @@ import { uuid } from 'uuidv4';
 import Task from '../models/task.model';
 import { tasks, users } from '../data-storage';
 
-const validateToAssign = (res: Response, username: string) => {
-  const existingUser = users.find((user) => user.username === username);
-  if (!existingUser) {
-    return res.status(404).json({ message: 'Assigned user does not exist' });
-  }
-};
+const findUserByUsername = (res: Response, username: string) =>
+  users.find((user) => user.username === username);
 
 export const createTask = (req: Request, res: Response) => {
   const { title, description, dueDate, category, assignedTo } = req.body;
 
   if (assignedTo) {
-    validateToAssign(res, assignedTo);
+    const existingUser = findUserByUsername(res, assignedTo);
+    if (!existingUser) {
+      return res.status(404).json({ message: 'Assigned user does not exist' });
+    }
   }
 
   const newTask: Task = {
@@ -51,7 +50,10 @@ export const updateTask = (req: Request, res: Response) => {
   }
 
   if (req.body.assignedTo) {
-    validateToAssign(res, req.body.assignedTo);
+    const existingUser = findUserByUsername(res, req.body.assignedTo);
+    if (!existingUser) {
+      return res.status(404).json({ message: 'Assigned user does not exist' });
+    }
   }
 
   tasks[taskIndex] = { ...tasks[taskIndex], ...req.body };
@@ -73,14 +75,28 @@ export const deleteTask = (req: Request, res: Response) => {
 };
 
 export const getAllTasks = (req: any, res: Response) => {
-  const totalTasks = tasks.length;
+  const { assignedTo, category } = req.query;
+
+  let filteredTasks = tasks;
+
+  if (assignedTo) {
+    filteredTasks = filteredTasks.filter(
+      (task) => task.assignedTo === assignedTo
+    );
+  }
+
+  if (category) {
+    filteredTasks = filteredTasks.filter((task) => task.category === category);
+  }
+
+  const totalTasks = filteredTasks.length;
 
   const page = parseInt(req.query.page, 10) || 1;
   const limit = parseInt(req.query.limit, 10) || 10;
   const startIndex = (page - 1) * limit;
   const endIndex = startIndex + limit;
-  
-  const tasksForPage = tasks.slice(startIndex, endIndex);
+
+  const tasksForPage = filteredTasks.slice(startIndex, endIndex);
 
   const responseData = {
     totalTasks,
