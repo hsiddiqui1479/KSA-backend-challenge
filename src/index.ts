@@ -1,7 +1,10 @@
 import dotenv from 'dotenv';
+import cors from 'cors';
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import swaggerUi from 'swagger-ui-express';
+import morgan from 'morgan';
+import fs from 'fs';
 
 import taskRoutes from './routes/task.routes';
 import userRoutes from './routes/user.routes';
@@ -11,6 +14,13 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+const accessLogStream = fs.createWriteStream(__dirname + '/access.log', {
+  flags: 'a',
+});
+app.use(morgan('combined', { stream: accessLogStream }));
+
+app.use(cors());
 
 app.use(bodyParser.json());
 
