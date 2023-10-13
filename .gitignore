@@ -24,3 +24,6 @@ npm-debug.log
 
 # Build artifacts
 /dist/
+
+# Jest coverage files
+coverage/

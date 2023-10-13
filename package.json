@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npx jest --coverage",
     "commit": "cz"
   },
   "repository": {
@@ -20,6 +21,8 @@
   },
   "homepage": "https://github.com/hsiddiqui1479/KSA-backend-challenge#readme",
   "dependencies": {
+    "@babel/preset-env": "^7.23.2",
+    "babel-jest": "^29.7.0",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "dotenv": "^16.3.1",
@@ -33,10 +36,17 @@
     "uuidv4": "^6.2.13"
   },
   "devDependencies": {
+    "@jest/globals": "^29.7.0",
     "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.19",
+    "@types/jest": "^29.5.5",
     "@types/jsonwebtoken": "^9.0.3",
+    "@types/node": "^20.8.4",
+    "@types/supertest": "^2.0.14",
     "@types/swagger-jsdoc": "^6.0.1",
-    "@types/swagger-ui-express": "^4.1.4"
+    "@types/swagger-ui-express": "^4.1.4",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.1.1"
   }
 }
