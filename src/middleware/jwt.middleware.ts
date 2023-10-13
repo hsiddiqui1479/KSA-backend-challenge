@@ -12,7 +12,6 @@ export const verifyToken = (req: any, res: Response, next: NextFunction) => {
 
   const tokenWithoutBearer = token.substring(7);
 
-
   jwt.verify(tokenWithoutBearer, secretKey, (err: Error | null, decoded: any) => {
     if (err) {
       return res.status(401).json({ message: 'Invalid token' });

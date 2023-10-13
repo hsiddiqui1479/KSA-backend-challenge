@@ -71,7 +71,7 @@ export const userSignin = async (req: Request, res: Response) => {
 
     res.status(200).json({ token });
   } catch (error: any) {
-    console.error('Error in userSignup:', error);
+    console.error('Error in userSignin:', error);
     res.status(500).json({ message: error.message });
   }
 };
