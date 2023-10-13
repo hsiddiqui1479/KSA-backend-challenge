@@ -10,6 +10,7 @@ Simple task management system where ssers can create tasks, assign them to other
 - Password Hashing: Bcrypt
 - Unit Testing and Coverage: Jest and Supertest
 - API Documentation: Swagger-UI-Express and Postman
+- Logging: Morgan
 - Database: In-memory arrays and objects for data storage
 
 ## Prerequisites
